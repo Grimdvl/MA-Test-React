@@ -1,14 +1,36 @@
-.product-card {
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    text-decoration: none;
+    border: none;
+    outline: none;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    background: #141414;
+    color: white;
+    height: 100%;
+    width: 100%;
+    padding: 10rem 20% 2rem;
+}
+
+.card {
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 1rem;
     padding: 20px;
     margin: 10px;
     width: 300px;
     display: inline-block;
 }
 
-.product-card img {
-max-width: 100%;
-height: auto;
-margin-top: 10px;
+.card img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
 }

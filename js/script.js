@@ -1,38 +1,38 @@
-const productsContainer = document.getElementById('products-container');
+const productsContainer = document.querySelector('products');
 
-// Получение данных о продуктах с сервера
+// Получаем данные с API
 fetch('https://api.escuelajs.co/api/v1/products')
-    .then(response => response.json())
-    .then(products => {
-        // Создание элементов для каждого продукта
-        products.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.classList.add('product-card');
+  .then(response => response.json())
+  .then(data => {
+    // Обрабатываем полученные данные
+    data.forEach(product => {
+      // Создаем карточку для каждого продукта
+      const card = document.createElement('div');
+      card.classList.add('card');
 
-            const productTitle = document.createElement('h2');
-            productTitle.textContent = product.title;
+      // Добавляем заголовок
+      const title = document.createElement('h2');
+      title.textContent = product.name;
+      card.appendChild(title);
 
-            const productPrice = document.createElement('p');
-            productPrice.textContent = `Price: $${product.price}`;
+      // Добавляем цену
+      const price = document.createElement('p');
+      price.textContent = `Price: $${product.price}`;
+      card.appendChild(price);
 
-            const productDescription = document.createElement('p');
-            productDescription.textContent = product.description;
+      // Добавляем краткое описание
+      const description = document.createElement('p');
+      description.textContent = product.description;
+      card.appendChild(description);
 
-            // Создание элементов для каждой картинки продукта
-            product.images.forEach(imageUrl => {
-                const productImage = document.createElement('img');
-                productImage.src = imageUrl;
-                productImage.alt = product.title;
-                productCard.appendChild(productImage);
-            });
+      // Добавляем фото
+      const photo = document.createElement('img');
+      photo.src = product.image;
+      photo.alt = product.name;
+      card.appendChild(photo);
 
-            // Добавление всех созданных элементов в контейнер продуктов
-            productCard.appendChild(productTitle);
-            productCard.appendChild(productPrice);
-            productCard.appendChild(productDescription);
-            productsContainer.appendChild(productCard);
-        });
-    })
-    .catch(error => {
-        console.error('Error fetching products:', error);
+      // Добавляем карточку продукта в контейнер
+      productsContainer.appendChild(card);
     });
+  })
+  .catch(error => console.error('Error fetching products:', error));
