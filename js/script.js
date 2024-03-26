@@ -1,38 +1,44 @@
-const productsContainer = document.querySelector('products');
+document.addEventListener('DOMContentLoaded', function() {
+    const productsContainer = document.querySelector('.products');
+    const placeholderImage = 'https://placehold.co/600x400';
 
-// Получаем данные с API
-fetch('https://api.escuelajs.co/api/v1/products')
-  .then(response => response.json())
-  .then(data => {
-    // Обрабатываем полученные данные
-    data.forEach(product => {
-      // Создаем карточку для каждого продукта
-      const card = document.createElement('div');
-      card.classList.add('card');
+    fetch('https://api.escuelajs.co/api/v1/products')
+        .then(response => response.json())
+        .then(products => {
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                const productTitle = document.createElement('h2');
+                const productPrice = document.createElement('p');
+                const productDescription = document.createElement('p');
+                const productImage = document.createElement('img');
 
-      // Добавляем заголовок
-      const title = document.createElement('h2');
-      title.textContent = product.name;
-      card.appendChild(title);
+                const maxLength = 30;
 
-      // Добавляем цену
-      const price = document.createElement('p');
-      price.textContent = `Price: $${product.price}`;
-      card.appendChild(price);
+                productCard.classList.add('card');
 
-      // Добавляем краткое описание
-      const description = document.createElement('p');
-      description.textContent = product.description;
-      card.appendChild(description);
+                productTitle.textContent = product.title;
+                productPrice.textContent = `Price: $${product.price}`;
+                if (product.description.length > maxLength) {
+                    productDescription.textContent = product.description.slice(0, maxLength) + '...';
+                } else {
+                    productDescription.textContent = product.description;
+                }
 
-      // Добавляем фото
-      const photo = document.createElement('img');
-      photo.src = product.image;
-      photo.alt = product.name;
-      card.appendChild(photo);
+                productImage.onerror = () => {
+                    productImage.src = placeholderImage;
+                    productImage.alt = 'Placeholder Image';
+                };
+                productImage.src = product.images[0];
+                productImage.alt = product.title;
 
-      // Добавляем карточку продукта в контейнер
-      productsContainer.appendChild(card);
-    });
-  })
-  .catch(error => console.error('Error fetching products:', error));
+                productCard.appendChild(productImage);
+                productCard.appendChild(productTitle);
+                productCard.appendChild(productPrice);
+                productCard.appendChild(productDescription);
+                productsContainer.appendChild(productCard);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching products:', error);
+        });
+});
