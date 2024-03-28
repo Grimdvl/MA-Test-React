@@ -60,7 +60,6 @@ body, html {
 
 .products__card-img {
     max-width: 100%;
-    /* height: 20rem; */
     max-height: 100%;
 }
 
@@ -146,4 +145,61 @@ body, html {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.basket {
+    position: fixed;
+    right: 10rem;
+    top: 5rem;
+    width: 4rem;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+}
+
+.basket-img {
+    font-size: 3rem;
+    color: white;
+}
+
+.basket-counter {
+    display: flex;
+    color: white;
+    font-weight: bold;
+    align-items: end;
+}
+
+.modal {
+    height: 70%;
+    width: 70%;
+    background-color: white;
+    color: #141414;
+    z-index: 3;
+    position: fixed;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.modal-title {
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.modal--close {
+    position: absolute;
+    height: 2rem;
+    width: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+    background-color: transparent;
 }

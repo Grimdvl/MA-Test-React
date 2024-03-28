@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="basket">
+        <i class='bx bx-basket basket-img'></i>
+        <span class="basket-counter"></span>
+    </div>
+
     <section class="products"></section>
+
+    <div class="modal">
+        <div class="modal-title">Wish List</div>
+        <button class="modal--close">x</button>
+    </div>
 
     <div class="spinner">
         <div class="lds-ring">
@@ -18,6 +29,7 @@
         </div>
     </div>
 
+    <i class='bx bxs-basket'></i>
     <script src="js/script.js"></script>
 </body>
 </html>

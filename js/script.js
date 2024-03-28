@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const productsContainer = document.querySelector('.products');
     const spinner = document.querySelector('.spinner');
     const placeholderImage = 'https://placehold.co/600x400';
+    const basket = document.querySelector('.basket');
+    const basketCounter = basket.querySelector('.basket-counter');
+    const modal = document.querySelector('.modal');
+    const modalClose = modal.querySelector('.modal--close');
 
     fetch('https://api.escuelajs.co/api/v1/products')
         .then(response => response.json())
@@ -65,6 +69,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 productPrice.appendChild(productPriceText);
                 productPriceText.appendChild(productPriceNum);
                 productPrice.appendChild(productPriceAdd);
+
+                const addingToBasket = () => {
+                    productPriceAdd.addEventListener('click', () => {
+                        if (basketCounter.textContent < 10) {
+                            basketCounter.textContent = +basketCounter.textContent + 1;
+                        }
+                    });
+                }
+
+                const openModal = () => {
+                    basket.addEventListener('click', () => {
+                        modal.style.display = 'block';
+                    });
+                }
+
+                const closeModal = () => {
+                    // modalClose.addEventListener('click', () => {
+                        modal.style.display = 'none';
+                    // });
+                }
+
+                modal.addEventListener('click', (e) => {
+                    if (e.target === !modal || e.target.modalClose) {
+                        closeModal();
+                    }
+                });
+
+                // closeModal();
+                openModal();
+                addingToBasket();
             });
         })
         .catch(error => {
