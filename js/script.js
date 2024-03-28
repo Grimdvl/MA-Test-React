@@ -85,18 +85,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 const closeModal = () => {
-                    // modalClose.addEventListener('click', () => {
+                    modalClose.addEventListener('click', () => {
                         modal.style.display = 'none';
-                    // });
+                    });
                 }
 
-                modal.addEventListener('click', (e) => {
+                window.addEventListener('click', (e) => {
                     if (e.target === !modal || e.target.modalClose) {
                         closeModal();
                     }
                 });
 
-                // closeModal();
+                closeModal();
                 openModal();
                 addingToBasket();
             });
