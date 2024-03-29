@@ -91,33 +91,50 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (basketCounter.textContent < purchLength) {
                         basketCounter.textContent = +basketCounter.textContent + 1;
 
+                        const productPriceDel = document.createElement('button');
                         const modalProductCard = document.createElement('div');
                         const modalProductTitle = document.createElement('h2');
                         const modalProductPrice = document.createElement('p');
                         const modalProductPriceNum = document.createElement('span');
                         const modalProductImage = document.createElement('img');
+                        const modalProductPriceText = document.createElement('p');
 
                         modalProductCard.classList.add('modal__products-card');
                         modalProductTitle.classList.add('modal__products-title');
-                        modalProductPrice.classList.add('modal__products-price');
-                        modalProductPriceNum.classList.add('modal__products-price');
+                        modalProductPrice.classList.add('modal__card-price');
+                        modalProductPriceNum.classList.add('modal__price-num');
+                        modalProductPriceText.classList.add('modal__price-text');
                         modalProductImage.classList.add('modal__products-img');
+                        productPriceDel.classList.add('price--deleting');
 
                         modalProductTitle.textContent = product.title;
-                        modalProductPriceNum.textContent = `$ ${product.price}`;
                         modalProductImage.onerror = () => {
                             modalProductImage.src = placeholderImage;
                             modalProductImage.alt = 'Placeholder Image';
                         };
                         modalProductImage.src = product.images[0];
                         modalProductImage.alt = product.title;
+                        productPriceDel.textContent = 'Delet';
+                        modalProductPriceText.innerHTML = `Price <br> <br>`;
+                        modalProductPriceNum.textContent = `$ ${product.price}`;
 
                         modalProductCard.appendChild(modalProductImage);
                         modalProductCard.appendChild(modalProductTitle);
                         modalProductCard.appendChild(modalProductPrice);
-                        modalProductPrice.appendChild(modalProductPriceNum);
-
+                        modalProductPrice.appendChild(modalProductPriceText);
                         modalProductsContainer.appendChild(modalProductCard);
+                        modalProductPriceText.appendChild(modalProductPriceNum);
+                        modalProductPrice.appendChild(productPriceDel);
+
+                        productPriceDel.addEventListener('click', () => {
+                            modalProductCard.remove();
+                            basketCounter.textContent = +basketCounter.textContent - 1;
+                            if (basketCounter.textContent === '0') {
+                                basketCounter.textContent = '';
+                                modalProductsContainer.appendChild(modalEmpty);
+                            }
+                        });
+                        
                     }
                 });
             });
