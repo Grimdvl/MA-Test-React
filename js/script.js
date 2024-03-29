@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const productPriceAdd = document.createElement('button');
 
                 const descrLength = 50;
-                const purchLength = 11;
+                const purchLength = 12;
 
                 productCard.classList.add('products__card');
                 productTitle.classList.add('products__card-title');
