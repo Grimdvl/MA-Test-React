@@ -6,6 +6,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const basketCounter = basket.querySelector('.basket-counter');
     const modal = document.querySelector('.modal');
     const modalClose = modal.querySelector('.modal--close');
+    const overflow = document.querySelector('.overflow');
+    const modalProductsContainer = modal.querySelector('.modal__products');
+    const modalEmpty = modalProductsContainer.querySelector('.modal__products-empty');
+
+    const openModal = () => {
+        modal.style.display = 'block';
+        overflow.style.display = 'block';
+        document.body.classList.add('active');
+    }
+
+    const closeModal = () => {
+        modal.style.display = 'none';
+        overflow.style.display = 'none';
+        document.body.classList.remove('active');
+    }
 
     fetch('https://api.escuelajs.co/api/v1/products')
         .then(response => response.json())
@@ -23,7 +38,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const productCategory = document.createElement('button');
                 const productPriceAdd = document.createElement('button');
 
-                const maxLength = 50;
+                const descrLength = 50;
+                const purchLength = 10;
 
                 productCard.classList.add('products__card');
                 productTitle.classList.add('products__card-title');
@@ -40,8 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 productPriceText.innerHTML = `Price <br> <br>`;
                 productPriceNum.textContent = `$ ${product.price}`;
                 productDescrButton.textContent = '...Read More';
-                if (product.description.length > maxLength) {
-                    productDescription.textContent = `${product.description.slice(0, maxLength)}`;
+                if (product.description.length > descrLength) {
+                    productDescription.textContent = `${product.description.slice(0, descrLength)}`;
                     productDescrButton.addEventListener('click', () => {
                         productDescription.textContent = product.description;
                         productDescrButton.style.display = 'none';
@@ -59,49 +75,58 @@ document.addEventListener('DOMContentLoaded', function() {
                 productCategory.textContent = product.category.name;
                 productPriceAdd.textContent = 'Add to Cart'
 
+                productsContainer.appendChild(productCard);
                 productCard.appendChild(productImage);
                 productCard.appendChild(productTitle);
                 productCard.appendChild(productDescription);
                 productCard.appendChild(productCategory);
                 productDescription.appendChild(productDescrButton);
-                productsContainer.appendChild(productCard);
                 productCard.appendChild(productPrice);
                 productPrice.appendChild(productPriceText);
                 productPriceText.appendChild(productPriceNum);
                 productPrice.appendChild(productPriceAdd);
 
-                const addingToBasket = () => {
-                    productPriceAdd.addEventListener('click', () => {
-                        if (basketCounter.textContent < 10) {
-                            basketCounter.textContent = +basketCounter.textContent + 1;
-                        }
-                    });
-                }
+                productPriceAdd.addEventListener('click', () => {
+                    modalEmpty.remove();
+                    if (basketCounter.textContent < purchLength) {
+                        basketCounter.textContent = +basketCounter.textContent + 1;
 
-                const openModal = () => {
-                    basket.addEventListener('click', () => {
-                        modal.style.display = 'block';
-                    });
-                }
+                        const modalProductCard = document.createElement('div');
+                        const modalProductTitle = document.createElement('h2');
+                        const modalProductPrice = document.createElement('p');
+                        const modalProductPriceNum = document.createElement('span');
+                        const modalProductImage = document.createElement('img');
 
-                const closeModal = () => {
-                    modalClose.addEventListener('click', () => {
-                        modal.style.display = 'none';
-                    });
-                }
+                        modalProductCard.classList.add('modal__products-card');
+                        modalProductTitle.classList.add('modal__products-title');
+                        modalProductPrice.classList.add('modal__products-price');
+                        modalProductPriceNum.classList.add('modal__products-price');
+                        modalProductImage.classList.add('modal__products-img');
 
-                window.addEventListener('click', (e) => {
-                    if (e.target === !modal || e.target.modalClose) {
-                        closeModal();
+                        modalProductTitle.textContent = product.title;
+                        modalProductPriceNum.textContent = `$ ${product.price}`;
+                        modalProductImage.onerror = () => {
+                            modalProductImage.src = placeholderImage;
+                            modalProductImage.alt = 'Placeholder Image';
+                        };
+                        modalProductImage.src = product.images[0];
+                        modalProductImage.alt = product.title;
+
+                        modalProductCard.appendChild(modalProductImage);
+                        modalProductCard.appendChild(modalProductTitle);
+                        modalProductCard.appendChild(modalProductPrice);
+                        modalProductPrice.appendChild(modalProductPriceNum);
+
+                        modalProductsContainer.appendChild(modalProductCard);
                     }
                 });
-
-                closeModal();
-                openModal();
-                addingToBasket();
             });
         })
         .catch(error => {
             console.error('Error fetching products:', error);
         });
+
+        basket.addEventListener('click', openModal);
+        modalClose.addEventListener('click', closeModal);
+        overflow.addEventListener('click', closeModal);
 });

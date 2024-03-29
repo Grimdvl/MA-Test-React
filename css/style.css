@@ -17,8 +17,9 @@ body, html {
 
 .products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, 300px);
+    gap: 2rem;
     background: #141414;
     color: white;
     min-height: 100vh;
@@ -30,12 +31,9 @@ body, html {
     border: .1rem solid grey;
     border-radius: 1rem;
     padding: 2rem;
-    margin: 1rem;
     width: 100%;
     height: 100%;
     display: flex;
-    text-align: center;
-    justify-self: center;
     row-gap: 1rem;
     flex-direction: column;
     justify-content: space-between;
@@ -149,8 +147,8 @@ body, html {
 
 .basket {
     position: fixed;
-    right: 10rem;
-    top: 5rem;
+    right: 10%;
+    top: 5%;
     width: 4rem;
     cursor: pointer;
     z-index: 2;
@@ -171,14 +169,15 @@ body, html {
 }
 
 .modal {
-    height: 70%;
+    max-height: 100%;
     width: 70%;
     background-color: white;
     color: #141414;
-    z-index: 3;
+    z-index: 4;
     position: fixed;
     display: none;
     top: 50%;
+    overflow: auto;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
 }
@@ -202,4 +201,54 @@ body, html {
     font-size: 2rem;
     cursor: pointer;
     background-color: transparent;
+}
+
+.modal__products {
+    padding: 2rem;
+    display: grid;
+    text-align: center;
+    width: 100%;
+    min-height: 100%;
+    grid-template-columns: repeat(auto-fit, 300px);
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.modal__products-card {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: start;
+    row-gap: .5rem;
+    border: .1rem solid #141414;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.modal__products-title {
+    font-size: 1rem;
+}
+
+.modal__products-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.overflow {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background-color: rgba(255, 255, 255, 0.7);
+    inset: 0;
+    display: none;
+}
+
+body.active {
+    overflow: hidden;
 }
