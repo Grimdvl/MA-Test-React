@@ -33,14 +33,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    const updateModalSum = () => {
+        modalSum.textContent = shoppingList.reduce((total, item) => total + item.price, 0);
+    }
+
     const renderShoppingList = () => {
         modalProductsContainer.innerHTML = '';
+        let totalSum = 0;
 
         shoppingList.forEach(item => {
+            totalSum += item.price;
             const modalProductCard = createProductCard(item);
             modalProductsContainer.appendChild(modalProductCard);
         });
 
+        modalSum.textContent = totalSum;
         updateBasketCounter();
     }
 
@@ -79,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         modalSum.textContent = shoppingList.reduce((total, item) => total + item.price, 0);
 
-
         modalProductCard.appendChild(modalProductImage);
         modalProductCard.appendChild(modalProductTitle);
         modalProductCard.appendChild(modalProductPrice);
@@ -94,6 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         shoppingList = shoppingList.filter(product => product !== productToRemove);
         saveShoppingListToLocalStorage();
         renderShoppingList();
+        updateModalSum();
     }
 
     const updateBasketCounter = () => {
